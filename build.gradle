@@ -1,5 +1,6 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.2.51'
+	id 'com.github.johnrengelman.shadow' version '2.0.4'
 }
 
 group 'github.U8336Tea.ChannelManager'
@@ -26,4 +27,23 @@ compileKotlin {
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+shadowJar {
+	archiveName 'ChannelManager.jar'
+
+	manifest {
+		attributes('Manifest-Version': '1.0', 'Main-Class': 'MainKt')
+	}
+}
+
+task compileProject(group: 'build', dependsOn: ':shadowJar') {
+	doLast {
+		delete('out/artifacts/ChannelManager')
+		copy {
+			from 'build/libs/ChannelManager.jar'
+			into 'out/artifacts/ChannelManager'
+		}
+		delete('build/libs/ChannelManager.jar')
+	}
 }
