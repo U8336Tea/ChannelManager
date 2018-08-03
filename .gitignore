@@ -1,3 +1,7 @@
+# OS files
+.DS_Store
+thumbs.db
+
 # Compiled class file
 *.class
 
@@ -26,5 +30,8 @@ hs_err_pid*
 # Gradle files
 gradlew
 gradlew.bat
-gradle/
+.gradle/
 
+#Compile folders
+build/
+out/
