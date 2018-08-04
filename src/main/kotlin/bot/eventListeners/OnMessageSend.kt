@@ -4,6 +4,7 @@ import bot.commands.AllowSpeakingOnce
 import net.dv8tion.jda.core.events.Event
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent
 import net.dv8tion.jda.core.hooks.EventListener
+import java.util.*
 
 object OnMessageSend : EventListener {
 	override fun onEvent(event: Event) {
@@ -19,6 +20,12 @@ object OnMessageSend : EventListener {
 			controller.removeSingleRoleFromMember(event.member, role).queue()
 
 			AllowSpeakingOnce.once[channel]!!.remove(author)
+
+			Timer().schedule(object : TimerTask() {
+				override fun run() {
+					event.message.delete().queue()
+				}
+			}, 600_000) // 10 minutes
 		}
 	}
 }
